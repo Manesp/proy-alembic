@@ -1,14 +1,25 @@
-version: '3.3'
+version: '2'
 services:
 
     app:
-        build: app.py
-        links:
-            - db
+        build: 
+            context: .
+            dockerfile: Dockerfile
+        command: flask run --host 0.0.0.0 --reload --debugger
         ports:
-            - "80:80"
+        - 5000:5000
+        expose:
+        # Opens port 3306 on the container
+        - '5000'
+        volumes:
+        - .:/app
+        depends_on:
+        - db
+        links:
+        - db:db
+
     db:
-        image: mysql:5.7
+        image: mysql
         restart: always
         environment:
             MYSQL_DATABASE: 'db'
@@ -29,20 +40,4 @@ services:
             - my-db:/var/lib/mysql
     # Names our volume
 volumes:
-    my-db: 
-
-'''Creating network "proy-alembic_default" with the default driver
-Creating volume "proy-alembic_my-db" with default driver
-Building app
-Traceback (most recent call last):
-  File "docker-compose", line 6, in <module>
-  File "compose/cli/main.py", line 72, in main
-  File "compose/cli/main.py", line 128, in perform_command
-  File "compose/cli/main.py", line 1078, in up
-  File "compose/cli/main.py", line 1074, in up
-  File "compose/project.py", line 548, in up
-  File "compose/service.py", line 367, in ensure_image_exists
-  File "compose/service.py", line 1106, in build
-  File "site-packages/docker/api/build.py", line 148, in build
-TypeError: You must specify a directory to build in path
-[64424] Failed to execute script docker-compose''''
+    my-db:
