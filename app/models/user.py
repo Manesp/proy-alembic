@@ -1,6 +1,7 @@
 import sqlalchemy
 
 from . import db
+from flask import request,jsonify
 
 class User(db.Model):
     __versioned__ = {'strategy': 'subquery'}
@@ -15,3 +16,12 @@ class User(db.Model):
             'name': self.name,
             'surname': self.surname
         }
+
+def NewUser():
+    name = request.json['name'],
+    surname = request.json['surname'],
+    insert = User(name,surname)
+    db.session.add(insert)
+    db.session.commit()
+
+
