@@ -10,6 +10,7 @@ def create_app(environment=None):
 
 
 
-def register_blueprints(app):
+def register_blueprinøts(app):
     for module in find_modules('app.views'):
         app.register_blueprint(import_string(module).app)
+
