@@ -1,5 +1,4 @@
 from flask import Blueprint, current_app
-from models import NewUser
 
 
 app = Blueprint("ping", __name__)
@@ -10,5 +9,5 @@ def ping():
     return "pong"
 
 @app.route('/name',methods=['GET'])
-NewUser()
+def NewUser():
     return "200"
