@@ -19,7 +19,7 @@ def create():
 @app.route("/roles", methods=["DELETE"])
 def delete():
     role = Role.find(**request.json)
-    role.delete_all()
+    role.delete()
 
 @app.route("/roles", methods=["PUT"])
 def update():
